@@ -1,18 +1,27 @@
-// @ts-check
 import eslint from '@eslint/js';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import importPlugin from 'eslint-plugin-import';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['eslint.config.mjs'],
+    ignores: [
+      'eslint.config.mjs',
+      'node_modules',
+      'dist',
+      'data',
+      '.pnpm-store',
+    ],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   eslintPluginPrettierRecommended,
-  importPlugin.flatConfigs.recommended,
+  {
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
+  },
   {
     languageOptions: {
       globals: {
@@ -32,28 +41,17 @@ export default tseslint.config(
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
       'prettier/prettier': ['error', { endOfLine: 'auto' }],
-      'import/order': [
-        'error',
-        {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            'parent',
-            'sibling',
-            'index',
-          ],
-          pathGroups: [
-            {
-              pattern: '@nestjs/**',
-              group: 'external',
-              position: 'before',
-            },
-          ],
-          alphabeticalOrder: true,
-          newlinesBetween: 'always',
-        },
-      ],
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+    },
+  },
+  {
+    files: ['**/*.spec.ts', '**/*.e2e-spec.ts', 'test/**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/unbound-method': 'off',
     },
   },
 );

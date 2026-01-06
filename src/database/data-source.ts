@@ -1,5 +1,7 @@
 import 'dotenv/config';
+
 import { DataSource } from 'typeorm';
+
 import { buildDatabaseConfig } from './database.config';
 
 const isTs = __filename.endsWith('.ts');

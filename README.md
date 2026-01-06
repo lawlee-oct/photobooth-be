@@ -134,7 +134,7 @@ Scripts trong `package.json`:
 Sau khi sửa/ thêm entity trong `src/entities`:
 
 ```bash
-pnpm migration:generate --name=CreateUsers
+pnpm migration:generate <nhập tên migration>
 ```
 
 File migration sẽ được tạo trong `src/migrations`.

@@ -21,6 +21,7 @@
     "migration:generate": "sh -c 'ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate src/migrations/$1 -d src/database/data-source.ts' --",
     "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/database/data-source.ts",
     "migration:revert": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:revert -d src/database/data-source.ts",
+    "seed": "ts-node -r tsconfig-paths/register src/database/seeds/run-seed.ts",
     "prepare": "husky"
   },
   "dependencies": {

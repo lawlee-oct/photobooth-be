@@ -59,7 +59,8 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    if (user.role !== UserRole.ADMIN) {
+    // Allow ADMIN and SUPER_ADMIN to login via admin endpoint
+    if (user.role !== UserRole.ADMIN && user.role !== UserRole.SUPER_ADMIN) {
       throw new UnauthorizedException('Admin access only');
     }
 

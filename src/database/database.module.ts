@@ -7,7 +7,7 @@ import { buildDatabaseConfig } from './database.config';
   imports: [
     TypeOrmModule.forRoot({
       ...buildDatabaseConfig(),
-      autoLoadEntities: true,
+      entities: [__dirname + '/../entities/*.entity{.ts,.js}'],
       synchronize: process.env.DB_SYNC === 'true',
     }),
   ],

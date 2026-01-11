@@ -18,35 +18,34 @@ export enum DayType {
 
 @Entity({ name: 'discounts' })
 export class Discount {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ name: 'photobooth_id' })
-  photoboothId: string;
-
-  @ManyToOne(() => Photobooth)
-  @JoinColumn({ name: 'photobooth_id' })
-  photobooth: Photobooth;
-
-  @Column({ type: 'decimal', precision: 15, scale: 2 })
+  @Column({ type: 'decimal', precision: 15, scale: 0 })
   price: number;
 
   @Column({
     name: 'min_amount',
     type: 'decimal',
     precision: 15,
-    scale: 2,
+    scale: 0,
     nullable: true,
   })
   minAmount: number;
 
-  @Column({ name: 'discount_percent', type: 'decimal', precision: 5, scale: 2 })
+  @Column({
+    name: 'discount_percent',
+    type: 'decimal',
+    precision: 5,
+    scale: 0,
+    nullable: true,
+  })
   discountPercent: number;
 
-  @Column({ name: 'from_date' })
+  @Column({ name: 'from_date', default: new Date() })
   fromDate: Date;
 
-  @Column({ name: 'to_date' })
+  @Column({ name: 'to_date', nullable: true })
   toDate: Date;
 
   @Column({
@@ -57,9 +56,19 @@ export class Discount {
   })
   dayType: DayType;
 
+  @Column({ name: 'is_permanent', default: false })
+  isPermanent: boolean;
+
+  @Column({ name: 'photobooth_id' })
+  photoboothId: number;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @ManyToOne(() => Photobooth)
+  @JoinColumn({ name: 'photobooth_id' })
+  photobooth: Photobooth;
 }

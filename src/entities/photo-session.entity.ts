@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -23,15 +24,11 @@ export enum SessionStatus {
 
 @Entity({ name: 'photo_sessions' })
 export class PhotoSession {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ name: 'photobooth_id' })
-  photoboothId: string;
-
-  @ManyToOne(() => Photobooth)
-  @JoinColumn({ name: 'photobooth_id' })
-  photobooth: Photobooth;
+  @Column({ name: 'uuid', unique: true, default: () => 'gen_random_uuid()' })
+  uuid: string;
 
   @Column({ nullable: true })
   language: string;
@@ -43,8 +40,8 @@ export class PhotoSession {
   })
   layoutType: LayoutType;
 
-  @Column({ default: 1 })
-  quantity: number;
+  @Column({ name: 'print_count', default: 1 })
+  printCount: number;
 
   @Column({
     type: 'enum',
@@ -56,9 +53,17 @@ export class PhotoSession {
   @Column({ name: 'expired_at', nullable: true })
   expiredAt: Date;
 
+  @Column({ name: 'photobooth_id' })
+  @Index()
+  photoboothId: number;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @ManyToOne(() => Photobooth)
+  @JoinColumn({ name: 'photobooth_id' })
+  photobooth: Photobooth;
 }

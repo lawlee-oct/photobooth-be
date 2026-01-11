@@ -9,7 +9,6 @@ import {
 } from 'typeorm';
 
 import { PhotoSession } from './photo-session.entity';
-import { Printer } from './printer.entity';
 
 export enum PrintJobStatus {
   PENDING = 'PENDING',
@@ -20,18 +19,11 @@ export enum PrintJobStatus {
 
 @Entity({ name: 'print_jobs' })
 export class PrintJob {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ name: 'photo_session_id' })
-  photoSessionId: string;
-
-  @ManyToOne(() => PhotoSession)
-  @JoinColumn({ name: 'photo_session_id' })
-  photoSession: PhotoSession;
-
-  @Column({ default: 1 })
-  copies: number;
+  @Column({ name: 'print_count', default: 1 })
+  printCount: number;
 
   @Column({
     type: 'enum',
@@ -40,16 +32,16 @@ export class PrintJob {
   })
   status: PrintJobStatus;
 
-  @Column({ name: 'printer_id', nullable: true })
-  printerId: string;
-
-  @ManyToOne(() => Printer)
-  @JoinColumn({ name: 'printer_id' })
-  printer: Printer;
+  @Column({ name: 'photo_session_id' })
+  photoSessionid: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @ManyToOne(() => PhotoSession)
+  @JoinColumn({ name: 'photo_session_id' })
+  photoSession: PhotoSession;
 }

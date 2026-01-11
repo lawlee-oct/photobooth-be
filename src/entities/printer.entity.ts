@@ -14,8 +14,8 @@ export enum PrinterStatus {
 
 @Entity({ name: 'printers' })
 export class Printer {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   model: string;

@@ -14,8 +14,8 @@ export enum CameraStatus {
 
 @Entity({ name: 'cameras' })
 export class Camera {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   model: string;

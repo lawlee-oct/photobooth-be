@@ -3,12 +3,12 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-import { AdminResource } from './admin-resource.entity';
+import { AdminWallet } from './admin-wallet.entity';
 
 export enum UserRole {
   USER = 'USER',
@@ -23,8 +23,8 @@ export enum UserStatus {
 
 @Entity({ name: 'users' })
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ name: 'full_name', nullable: true })
   fullName: string;
@@ -49,16 +49,28 @@ export class User {
   })
   status: UserStatus;
 
-  @Column({ name: 'admin_resource_id', nullable: true })
-  adminResourceId: string;
+  @Column({ name: 'admin_wallet_id', nullable: true })
+  adminWalletId: number;
 
-  @OneToOne(() => AdminResource)
-  @JoinColumn({ name: 'admin_resource_id' })
-  adminResource: AdminResource;
+  @Column({ nullable: true })
+  address: string;
+
+  @Column({ nullable: true })
+  phoneNumber: string;
+
+  @Column({ default: false })
+  canUpdatePricing: boolean;
+
+  @Column({ default: false })
+  canUpdateWallet: boolean;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @ManyToOne(() => AdminWallet)
+  @JoinColumn({ name: 'admin_wallet_id' })
+  adminWallet: AdminWallet;
 }

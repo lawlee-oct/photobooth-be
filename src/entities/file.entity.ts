@@ -18,25 +18,17 @@ export enum FileType {
 
 @Entity({ name: 'files' })
 export class File {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ name: 'photo_session_id' })
-  photoSessionId: string;
-
-  @ManyToOne(() => PhotoSession)
-  @JoinColumn({ name: 'photo_session_id' })
-  photoSession: PhotoSession;
+  photoSessionid: number;
 
   @Column({ name: 'local_path' })
   localPath: string;
 
   @Column({ name: 'frame_id', nullable: true })
-  frameId: string;
-
-  @ManyToOne(() => Frame)
-  @JoinColumn({ name: 'frame_id' })
-  frame: Frame;
+  frameid: number;
 
   @Column({
     type: 'enum',
@@ -52,4 +44,12 @@ export class File {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @ManyToOne(() => Frame)
+  @JoinColumn({ name: 'frame_id' })
+  frame: Frame;
+
+  @ManyToOne(() => PhotoSession)
+  @JoinColumn({ name: 'photo_session_id' })
+  photoSession: PhotoSession;
 }

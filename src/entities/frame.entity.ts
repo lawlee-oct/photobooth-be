@@ -8,14 +8,20 @@ import {
 
 @Entity({ name: 'frames' })
 export class Frame {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   name: string;
 
   @Column({ nullable: true })
   type: string;
+
+  @Column()
+  url: string;
+
+  @Column({ name: 'local_path' })
+  localPath: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
